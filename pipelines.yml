@@ -1,0 +1,53 @@
+resources:
+  - name: repo_matrix_dynamic_steplets
+    type: GitRepo
+    configuration:
+    gitProvider: manishas_jfrog_github
+    path: manishas-jfrog/matrix-dynamic-steplets
+
+pipelines:
+  name: Matrix_Dynamic_Steplets
+  steps:
+    - name: pre_matrix
+      type: PreMatrix
+      configuration:
+        inputResources:
+          - name: repo_matrix_dynamic_steplets
+      execution:
+        onExecute:
+          - hasChanged=$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet1.txt)
+          - if [ -n "$hasChanged" ]; then echo "steplet1.txt was changed"; fi
+          - if [ -n "$hasChanged" ]; then steplet1=true; fi
+          - hasChanged=$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet2.txt)
+          - if [ -n "$hasChanged" ]; then echo "steplet2.txt was changed"; fi
+          - if [ -n "$hasChanged" ]; then steplet2=true; fi
+          - hasChanged=$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet3.txt)
+          - if [ -n "$hasChanged" ]; then echo "steplet3.txt was changed"; fi
+          - if [ -n "$hasChanged" ]; then steplet3=true; fi
+          - hasChanged=$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet4.txt)
+          - if [ -n "$hasChanged" ]; then echo "steplet4.txt was changed"; fi
+          - if [ -n "$hasChanged" ]; then steplet4=true; fi                    
+#          - compare_git --resource repo_matrix_dynamic_steplets | grep steplet1.txt
+#          - if [ compare_git --resource repo_matrix_dynamic_steplets | grep steplet1.txt ]
+#            then
+#              steplet1=true
+#            fi
+
+    - name: matrix_example
+      type: Matrix
+      stepMode: Bash
+      configuration:
+        inputSteps:
+          - name: pre_matrix
+      stepletMultipliers:
+        environmentVariables:
+          - steplet: 1
+          - steplet: 2
+          - steplet: 3
+          - steplet: 4          
+      execution:
+        onExecute:
+          - if [ $steplet1 ]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
+          - if [ $steplet2 ]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
+          - if [ $steplet3 ]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
+          - if [ $steplet4 ]; then echo "Execute steplet4"; else echo "Not executing steplet4"; fi 
