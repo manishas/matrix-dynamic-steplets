@@ -18,7 +18,7 @@ pipelines:
             - compare_git --resource repo_matrix_dynamic_steplets
             #- if [ -n "$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet1.txt || '')" ]; then echo "steplet1.txt was changed"; fi
             #- if [ $(compare_git --resource repo_matrix_dynamic_steplets | grep steplet1.txt) ]; then steplet1=true; fi
-            - hasChanged="$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet1.txt || '')"
+            - hasChanged="$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet1.txt || false)"
             - if [ -n "$hasChanged" ]; then echo "steplet1.txt was changed"; fi
             - if [ -n "$hasChanged" ]; then steplet1=true; fi
             - hasChanged="$(compare_git --resource repo_matrix_dynamic_steplets | grep steplet2.txt)"
