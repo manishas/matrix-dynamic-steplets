@@ -24,6 +24,7 @@ pipelines:
             - if grep -q "steplet3.txt" <<< $compare_results; then set_step_var matrix_envs "steplet3 = true"; fi
             - if grep -q "steplet4.txt" <<< $compare_results; then echo "steplet4.txt was changed"; fi
             - if grep -q "steplet4.txt" <<< $compare_results; then set_step_var matrix_envs "steplet4 = true"; fi
+            - set_step_var matrix_envs "matrixEnvs = true"
 
       - name: matrix_example
         type: Matrix
@@ -40,10 +41,11 @@ pipelines:
         execution:
           onExecute:
             - get_step_var pre_matrix matrix_envs
-            - echo $steplet1
-            - echo $steplet2
-            - echo $steplet3
-            - echo $steplet4
+            - echo matrixEnvs
+            - echo steplet1
+            - echo steplet2
+            - echo steplet3
+            - echo steplet4
             - if [ $steplet1 ]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
             - if [ $steplet2 ]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
             - if [ $steplet3 ]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
