@@ -17,13 +17,13 @@ pipelines:
           onExecute:
             - compare_results=$(compare_git --resource repo_matrix_dynamic_steplets)
             - if grep -q "steplet1.txt" <<< $compare_results; then echo "steplet1.txt was changed"; fi
-            - if grep -q "steplet1.txt" <<< $compare_results; then steplet1=true; fi
+            - if grep -q "steplet1.txt" <<< $compare_results; then set_step_var matrix_envs "steplet1 = true"; fi
             - if grep -q "steplet2.txt" <<< $compare_results; then echo "steplet2.txt was changed"; fi
-            - if grep -q "steplet2.txt" <<< $compare_results; then steplet2=true; fi
+            - if grep -q "steplet2.txt" <<< $compare_results; then set_step_var matrix_envs "steplet2 = true"; fi
             - if grep -q "steplet3.txt" <<< $compare_results; then echo "steplet3.txt was changed"; fi
-            - if grep -q "steplet3.txt" <<< $compare_results; then steplet3=true; fi
+            - if grep -q "steplet3.txt" <<< $compare_results; then set_step_var matrix_envs "steplet3 = true"; fi
             - if grep -q "steplet4.txt" <<< $compare_results; then echo "steplet4.txt was changed"; fi
-            - if grep -q "steplet4.txt" <<< $compare_results; then steplet4=true; fi
+            - if grep -q "steplet4.txt" <<< $compare_results; then set_step_var matrix_envs "steplet4 = true"; fi
 
       - name: matrix_example
         type: Matrix
@@ -39,6 +39,7 @@ pipelines:
             - steplet: 4    
         execution:
           onExecute:
+            - get_step_var matrix_demo matrix_envs
             - echo $steplet1
             - echo $steplet2
             - echo $steplet3
