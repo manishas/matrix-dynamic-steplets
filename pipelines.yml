@@ -41,11 +41,11 @@ pipelines:
         execution:
           onExecute:
             - get_step_var pre_matrix matrix_envs
-            - echo matrixEnvs
-            - echo steplet1
-            - echo steplet2
-            - echo steplet3
-            - echo steplet4
+            - source matrix_envs
+            - echo $steplet1
+            - echo $steplet2
+            - echo $steplet3
+            - echo $steplet4
             - if [ $steplet1 ]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
             - if [ $steplet2 ]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
             - if [ $steplet3 ]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
