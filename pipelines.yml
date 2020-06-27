@@ -39,7 +39,7 @@ pipelines:
             - steplet: 4    
         execution:
           onExecute:
-            - get_step_var matrix_demo matrix_envs
+            - get_step_var pre_matrix matrix_envs
             - echo $steplet1
             - echo $steplet2
             - echo $steplet3
