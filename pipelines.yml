@@ -24,7 +24,7 @@ pipelines:
             - if grep -q "steplet3.txt" <<< $compare_results; then set_step_var matrix_envs "steplet3 = true"; fi
             - if grep -q "steplet4.txt" <<< $compare_results; then echo "steplet4.txt was changed"; fi
             - if grep -q "steplet4.txt" <<< $compare_results; then set_step_var matrix_envs "steplet4 = true"; fi
-            - set_step_var matrix_envs "matrixEnvs = true"
+            - set_step_var matrix_envs "steplet1 = ${steplet1},steplet2 = ${steplet2},steplet3 = ${steplet3},steplet4 = ${steplet4}"
 
       - name: matrix_example
         type: Matrix
@@ -41,7 +41,6 @@ pipelines:
         execution:
           onExecute:
             - get_step_var pre_matrix matrix_envs
-            - source matrix_envs
             - echo $steplet1
             - echo $steplet2
             - echo $steplet3
