@@ -16,14 +16,15 @@ pipelines:
         execution:
           onExecute:
             - compare_results=$(compare_git --resource repo_matrix_dynamic_steplets)
+            - echo "$compare_results"
             - if grep -q "steplet1.txt" <<< $compare_results; then echo "steplet1.txt was changed"; fi
-            - if grep -q "steplet1.txt" <<< $compare_results; then steplet1=true; fi
+            - if grep -q "steplet1.txt" <<< $compare_results; then set_step_var steplet1 true; fi
             - if grep -q "steplet2.txt" <<< $compare_results; then echo "steplet2.txt was changed"; fi
-            - if grep -q "steplet2.txt" <<< $compare_results; then steplet2=true; fi
+            - if grep -q "steplet2.txt" <<< $compare_results; then set_step_var steplet2 true; fi
             - if grep -q "steplet3.txt" <<< $compare_results; then echo "steplet3.txt was changed"; fi
-            - if grep -q "steplet3.txt" <<< $compare_results; then steplet3=true; fi
+            - if grep -q "steplet3.txt" <<< $compare_results; then set_step_var steplet3 true; fi
             - if grep -q "steplet4.txt" <<< $compare_results; then echo "steplet4.txt was changed"; fi
-            - if grep -q "steplet4.txt" <<< $compare_results; then steplet4=true; fi
+            - if grep -q "steplet4.txt" <<< $compare_results; then set_step_var steplet4 true; fi
             - set_step_var matrix_envs "steplet1 = ${steplet1},steplet2 = ${steplet2},steplet3 = ${steplet3},steplet4 = ${steplet4}"
 
       - name: matrix_example
@@ -41,11 +42,12 @@ pipelines:
         execution:
           onExecute:
             - get_step_var pre_matrix matrix_envs
-            - echo $steplet1
-            - echo $steplet2
-            - echo $steplet3
-            - echo $steplet4
-            - if [ $steplet1 ]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
-            - if [ $steplet2 ]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
-            - if [ $steplet3 ]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
-            - if [ $steplet4 ]; then echo "Execute steplet4"; else echo "Not executing steplet4"; fi 
+            - steplet1="$(get_step_var pre_matrix steplet1)"
+            - steplet2="$(get_step_var pre_matrix steplet2)"
+            - steplet3="$(get_step_var pre_matrix steplet3)"
+            - steplet4="$(get_step_var pre_matrix steplet4)"
+            - echo "Running on $steplet_number with env $steplet"
+            - if [[ -n "$steplet1" && "$steplet" -eq 1 ]]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
+            - if [[ -n "$steplet2" && "$steplet" -eq 2 ]]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
+            - if [[ -n "$steplet3" && "$steplet" -eq 3 ]]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
+            - if [[ -n "$steplet4" && "$steplet" -eq 4 ]]; then echo "Execute steplet4"; else echo "Not executing steplet4"; fi 
