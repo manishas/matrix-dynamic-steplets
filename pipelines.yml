@@ -18,6 +18,7 @@ pipelines:
         execution:
           onExecute:
             - compare_results=$(compare_git --resource repo_matrix_dynamic_steplets_debug)
+            - echo "$compare_results"
             - if grep -q "steplet1.txt" <<< $compare_results; then echo "steplet1.txt was changed"; fi
             - if grep -q "steplet1.txt" <<< $compare_results; then steplet1=true; fi
             - if grep -q "steplet2.txt" <<< $compare_results; then echo "steplet2.txt was changed"; fi
