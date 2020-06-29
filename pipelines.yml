@@ -8,7 +8,7 @@ resources:
         include: "^debug$"
 
 pipelines:
-  - name: Matrix_Dynamic_Steplets
+  - name: Matrix_Dynamic_Steplets_Debug
     steps:
       - name: pre_matrix
         type: PreMatrix
