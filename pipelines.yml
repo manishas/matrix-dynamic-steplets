@@ -52,7 +52,8 @@ pipelines:
             - echo $steplet2
             - echo $steplet3
             - echo $steplet4
-            - if [ $steplet1 ] && [ "$steplet_number" == 1 ]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
-            - if [ $steplet2 ] && [ "$steplet_number" == 2 ]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
-            - if [ $steplet3 ] && [ "$steplet_number" == 3 ]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
-            - if [ $steplet4 ] && [ "$steplet_number" == 4 ]; then echo "Execute steplet4"; else echo "Not executing steplet4"; fi 
+            - echo "Running on $steplet_number"
+            - if [ -z "$steplet1" -a "$steplet_number" == 1 ]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
+            - if [ -z "$steplet2" -a "$steplet_number" == 2 ]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
+            - if [ -z "$steplet3" -a "$steplet_number" == 3 ]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
+            - if [ -z "$steplet4" -a "$steplet_number" == 4 ]; then echo "Execute steplet4"; else echo "Not executing steplet4"; fi 
