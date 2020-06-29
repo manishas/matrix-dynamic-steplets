@@ -4,7 +4,7 @@ resources:
     configuration:
       gitProvider: manishas_jfrog_github
       path: manishas-jfrog/matrix-dynamic-steplets
-      branch:
+      branches:
         include: "^debug$"
 
 pipelines:
