@@ -53,7 +53,7 @@ pipelines:
             - echo $steplet3
             - echo $steplet4
             - echo "Running on $steplet_number"
-            - if [[ -n "$steplet1" && "$steplet_number" -eq 1 ]]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
-            - if [[ -n "$steplet2" && "$steplet_number" -eq 2 ]]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
-            - if [[ -n "$steplet3" && "$steplet_number" -eq 3 ]]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
-            - if [[ -n "$steplet4" && "$steplet_number" -eq 4 ]]; then echo "Execute steplet4"; else echo "Not executing steplet4"; fi 
+            - if [[ -n "$steplet1" && "$steplet_number" -eq "$steplet" ]]; then echo "Execute steplet1"; else echo "Not executing steplet1"; fi 
+            - if [[ -n "$steplet2" && "$steplet_number" -eq "$steplet" ]]; then echo "Execute steplet2"; else echo "Not executing steplet2"; fi 
+            - if [[ -n "$steplet3" && "$steplet_number" -eq "$steplet" ]]; then echo "Execute steplet3"; else echo "Not executing steplet3"; fi 
+            - if [[ -n "$steplet4" && "$steplet_number" -eq "$steplet" ]]; then echo "Execute steplet4"; else echo "Not executing steplet4"; fi 
