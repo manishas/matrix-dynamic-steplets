@@ -1,9 +1,11 @@
 resources:
-  - name: repo_matrix_dynamic_steplets
+  - name: repo_matrix_dynamic_steplets_debug
     type: GitRepo
     configuration:
       gitProvider: manishas_jfrog_github
       path: manishas-jfrog/matrix-dynamic-steplets
+      branch:
+        include: "^debug$"
 
 pipelines:
   - name: Matrix_Dynamic_Steplets
@@ -12,10 +14,10 @@ pipelines:
         type: PreMatrix
         configuration:
           inputResources:
-            - name: repo_matrix_dynamic_steplets
+            - name: repo_matrix_dynamic_steplets_debug
         execution:
           onExecute:
-            - compare_results=$(compare_git --resource repo_matrix_dynamic_steplets)
+            - compare_results=$(compare_git --resource repo_matrix_dynamic_steplets_debug)
             - if grep -q "steplet1.txt" <<< $compare_results; then echo "steplet1.txt was changed"; fi
             - if grep -q "steplet1.txt" <<< $compare_results; then steplet1=true; fi
             - if grep -q "steplet2.txt" <<< $compare_results; then echo "steplet2.txt was changed"; fi
